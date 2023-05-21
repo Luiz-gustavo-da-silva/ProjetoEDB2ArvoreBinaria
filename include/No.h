@@ -8,6 +8,8 @@ class No {
 public:
     int chave;
     int tamanho; // Tamanho da subárvore enraizada neste nó
+    int qNoSubarvoresEsquerda;
+    int qNoSubarvoresDireita;
     No * filhoEsquerda;
     No * filhoDireita;
 

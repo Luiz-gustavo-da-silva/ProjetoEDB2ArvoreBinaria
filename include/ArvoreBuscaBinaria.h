@@ -4,19 +4,20 @@
 using namespace std;
 
 #include "./No.h"
+#include <string>
 
 class ArvoreBuscaBinaria {
     
 private:
-    No* root;
+    No* raiz;
 
-    No* insertNode(No* node, int key);
+    No* insertNode(No* node, int chave);
 
-    No* removeNode(No* node, int key);
+    No* removeNode(No* node, int chave);
 
     No* getMinNode(No* node);
 
-    int rank(No* node, int key);
+    int rank(No* node, int chave);
 
     int getSize(No* node);
 
@@ -24,13 +25,27 @@ public:
 
     ArvoreBuscaBinaria();
 
-    void insert(int key);
+    ~ArvoreBuscaBinaria();
+    
+    void deleteTree(No *Noatual);
 
-    void remove(int key);
+    No * obterRaiz();
+    
+    bool isEmpty();
 
-    bool search(int key);
+    bool itIsNotEmpty();
 
-    int rank(int key);
+    void insert(int chave);
+
+    void remove(int chave);
+
+    bool search(int chave);
+
+    int rank(int chave);
+
+    string pre_ordem(No *Noatual);
+
+    void imprimeArvore (int s);
 };
 
 #endif

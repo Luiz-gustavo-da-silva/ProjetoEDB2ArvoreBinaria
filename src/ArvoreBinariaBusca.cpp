@@ -1,23 +1,24 @@
 #include "../include/ArvoreBuscaBinaria.h"
 
 #include <iostream>
+#include <cstddef>
 
 using namespace std;
 
-No *ArvoreBuscaBinaria::insertNode(No *node, int key)
+No *ArvoreBuscaBinaria::insertNode(No *node, int chave)
 {
     if (node == nullptr)
     {
-        return new No(key);
+        return new No(chave);
     }
 
-    if (key < node->chave)
+    if (chave < node->chave)
     {
-        node->filhoEsquerda = insertNode(node->filhoEsquerda, key);
+        node->filhoEsquerda = insertNode(node->filhoEsquerda, chave);
     }
     else
     {
-        node->filhoDireita = insertNode(node->filhoDireita, key);
+        node->filhoDireita = insertNode(node->filhoDireita, chave);
     }
 
     node->tamanho++; // Atualiza o tamanho da subárvore enraizada neste nó
@@ -25,20 +26,20 @@ No *ArvoreBuscaBinaria::insertNode(No *node, int key)
     return node;
 }
 
-No *ArvoreBuscaBinaria::removeNode(No *node, int key)
+No *ArvoreBuscaBinaria::removeNode(No *node, int chave)
 {
     if (node == nullptr)
     {
         return nullptr;
     }
 
-    if (key < node->chave)
+    if (chave < node->chave)
     {
-        node->filhoEsquerda = removeNode(node->filhoEsquerda, key);
+        node->filhoEsquerda = removeNode(node->filhoEsquerda, chave);
     }
-    else if (key > node->chave)
+    else if (chave > node->chave)
     {
-        node->filhoDireita = removeNode(node->filhoDireita, key);
+        node->filhoDireita = removeNode(node->filhoDireita, chave);
     }
     else
     {
@@ -75,20 +76,20 @@ No *ArvoreBuscaBinaria::getMinNode(No *node)
     return current;
 }
 
-int ArvoreBuscaBinaria::rank(No *node, int key)
+int ArvoreBuscaBinaria::rank(No *node, int chave)
 {
     if (node == nullptr)
     {
         return 0;
     }
 
-    if (key < node->chave)
+    if (chave < node->chave)
     {
-        return rank(node->filhoEsquerda, key);
+        return rank(node->filhoEsquerda, chave);
     }
-    else if (key > node->chave)
+    else if (chave > node->chave)
     {
-        return 1 + getSize(node->filhoEsquerda) + rank(node->filhoDireita, key);
+        return 1 + getSize(node->filhoEsquerda) + rank(node->filhoDireita, chave);
     }
     else
     {
@@ -105,31 +106,51 @@ int ArvoreBuscaBinaria::getSize(No *node)
     return node->tamanho;
 }
 
-ArvoreBuscaBinaria::ArvoreBuscaBinaria()
+ArvoreBuscaBinaria::ArvoreBuscaBinaria() // Construtor
 {
-    root = nullptr;
+    raiz = nullptr;
+}
+ArvoreBuscaBinaria::~ArvoreBuscaBinaria(){ // Destrutor
+
 }
 
-void ArvoreBuscaBinaria::insert(int key)
-{
-    root = insertNode(root, key);
+No * ArvoreBuscaBinaria::obterRaiz(){
+    return raiz;
 }
 
-void ArvoreBuscaBinaria::remove(int key)
-{
-    root = removeNode(root, key);
+
+
+bool ArvoreBuscaBinaria::isEmpty(){
+    return raiz == nullptr;
 }
 
-bool ArvoreBuscaBinaria::search(int key)
+
+bool ArvoreBuscaBinaria::itIsNotEmpty(){
+    return raiz != nullptr;
+}
+
+
+
+void ArvoreBuscaBinaria::insert(int chave)
 {
-    No *current = root;
+    raiz = insertNode(raiz, chave);
+}
+
+void ArvoreBuscaBinaria::remove(int chave)
+{
+    raiz = removeNode(raiz, chave);
+}
+
+bool ArvoreBuscaBinaria::search(int chave)
+{
+    No *current = raiz;
     while (current != nullptr)
     {
-        if (key == current->chave)
+        if (chave == current->chave)
         {
             return true;
         }
-        else if (key < current->chave)
+        else if (chave < current->chave)
         {
             current = current->filhoEsquerda;
         }
@@ -141,7 +162,7 @@ bool ArvoreBuscaBinaria::search(int key)
     return false;
 }
 
-int ArvoreBuscaBinaria::rank(int key)
+int ArvoreBuscaBinaria::rank(int chave)
 {
-    return rank(root, key);
+    return rank(raiz, chave);
 }
