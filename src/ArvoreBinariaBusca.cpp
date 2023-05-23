@@ -1,72 +1,72 @@
-#include "../include/ArvoreBuscaBinaria.h"
+#include "../include/ArvoreBinariaBusca.h"
 
 #include <iostream>
 #include <cstddef>
 
 using namespace std;
 
-No *ArvoreBuscaBinaria::insertNode(No *node, int chave)
+No *ArvoreBinariaBusca::inserirNo(No *no, int chave)
 {
-    if (node == nullptr)
+    if (no == nullptr)
     {
         return new No(chave);
     }
 
-    if (chave < node->chave)
+    if (chave < no->chave)
     {
-        node->filhoEsquerda = insertNode(node->filhoEsquerda, chave);
+        no->filhoEsquerda = inserirNo(no->filhoEsquerda, chave);
     }
     else
     {
-        node->filhoDireita = insertNode(node->filhoDireita, chave);
+        no->filhoDireita = inserirNo(no->filhoDireita, chave);
     }
 
-    node->tamanho++; // Atualiza o tamanho da subárvore enraizada neste nó
+    no->tamanho++; // Atualiza o tamanho da subárvore enraizada neste nó
 
-    return node;
+    return no;
 }
 
-No *ArvoreBuscaBinaria::removeNode(No *node, int chave)
+No *ArvoreBinariaBusca::removeNo(No *no, int chave)
 {
-    if (node == nullptr)
+    if (no == nullptr)
     {
         return nullptr;
     }
 
-    if (chave < node->chave)
+    if (chave < no->chave)
     {
-        node->filhoEsquerda = removeNode(node->filhoEsquerda, chave);
+        no->filhoEsquerda = removeNo(no->filhoEsquerda, chave);
     }
-    else if (chave > node->chave)
+    else if (chave > no->chave)
     {
-        node->filhoDireita = removeNode(node->filhoDireita, chave);
+        no->filhoDireita = removeNo(no->filhoDireita, chave);
     }
     else
     {
-        if (node->filhoEsquerda == nullptr)
+        if (no->filhoEsquerda == nullptr)
         {
-            No *temp = node->filhoDireita;
-            delete node;
+            No *temp = no->filhoDireita;
+            delete no;
             return temp;
         }
-        else if (node->filhoDireita == nullptr)
+        else if (no->filhoDireita == nullptr)
         {
-            No *temp = node->filhoEsquerda;
-            delete node;
+            No *temp = no->filhoEsquerda;
+            delete no;
             return temp;
         }
 
-        No *successor = getMinNode(node->filhoDireita);
-        node->chave = successor->chave;
-        node->filhoDireita = removeNode(node->filhoDireita, successor->chave);
+        No *successor = getMinNode(no->filhoDireita);
+        no->chave = successor->chave;
+        no->filhoDireita = removeNo(no->filhoDireita, successor->chave);
     }
 
-    node->tamanho--; // Atualiza o tamanho da subárvore enraizada neste nó
+    no->tamanho--; // Atualiza o tamanho da subárvore enraizada neste nó
 
-    return node;
+    return no;
 }
 
-No *ArvoreBuscaBinaria::getMinNode(No *node)
+No *ArvoreBinariaBusca::getMinNode(No *node)
 {
     No *current = node;
     while (current->filhoEsquerda != nullptr)
@@ -76,7 +76,7 @@ No *ArvoreBuscaBinaria::getMinNode(No *node)
     return current;
 }
 
-int ArvoreBuscaBinaria::rank(No *node, int chave)
+int ArvoreBinariaBusca::getAlturaNo(No *node, int chave)
 {
     if (node == nullptr)
     {
@@ -85,11 +85,11 @@ int ArvoreBuscaBinaria::rank(No *node, int chave)
 
     if (chave < node->chave)
     {
-        return rank(node->filhoEsquerda, chave);
+        return getAlturaNo(node->filhoEsquerda, chave);
     }
     else if (chave > node->chave)
     {
-        return 1 + getSize(node->filhoEsquerda) + rank(node->filhoDireita, chave);
+        return 1 + getSize(node->filhoEsquerda) + getAlturaNo(node->filhoDireita, chave);
     }
     else
     {
@@ -97,7 +97,7 @@ int ArvoreBuscaBinaria::rank(No *node, int chave)
     }
 }
 
-int ArvoreBuscaBinaria::getSize(No *node)
+int ArvoreBinariaBusca::getSize(No *node)
 {
     if (node == nullptr)
     {
@@ -106,42 +106,40 @@ int ArvoreBuscaBinaria::getSize(No *node)
     return node->tamanho;
 }
 
-ArvoreBuscaBinaria::ArvoreBuscaBinaria() // Construtor
+ArvoreBinariaBusca::ArvoreBinariaBusca() // Construtor
 {
     raiz = nullptr;
 }
-ArvoreBuscaBinaria::~ArvoreBuscaBinaria(){ // Destrutor
 
+ArvoreBinariaBusca::~ArvoreBinariaBusca()
+{ // Destrutor
 }
 
-No * ArvoreBuscaBinaria::obterRaiz(){
+/*No * ArvoreBinariaBusca::obterRaiz(){
     return raiz;
 }
 
 
-
-bool ArvoreBuscaBinaria::isEmpty(){
+bool ArvoreBinariaBusca::isEmpty(){
     return raiz == nullptr;
 }
 
 
-bool ArvoreBuscaBinaria::itIsNotEmpty(){
+bool ArvoreBinariaBusca::itIsNotEmpty(){
     return raiz != nullptr;
-}
+}*/
 
-
-
-void ArvoreBuscaBinaria::insert(int chave)
+void ArvoreBinariaBusca::inserir(int chave)
 {
-    raiz = insertNode(raiz, chave);
+    raiz = inserirNo(raiz, chave);
 }
 
-void ArvoreBuscaBinaria::remove(int chave)
+void ArvoreBinariaBusca::remove(int chave)
 {
-    raiz = removeNode(raiz, chave);
+    raiz = removeNo(raiz, chave);
 }
 
-bool ArvoreBuscaBinaria::search(int chave)
+bool ArvoreBinariaBusca::buscar(int chave)
 {
     No *current = raiz;
     while (current != nullptr)
@@ -162,7 +160,42 @@ bool ArvoreBuscaBinaria::search(int chave)
     return false;
 }
 
-int ArvoreBuscaBinaria::rank(int chave)
+int ArvoreBinariaBusca::alturaNo(int chave)
 {
-    return rank(raiz, chave);
+    return getAlturaNo(raiz, chave);
+}
+
+int ArvoreBinariaBusca::enesimoElemento(int n)
+{
+    if (n < 1 || n > getSize(raiz))
+    {
+        //throw std::out_of_range("Invalid index");
+        cout << "Invalid index" << endl;
+        return -1;
+    }
+    return getEnesimoElemento(raiz, n);
+}
+
+int ArvoreBinariaBusca::getEnesimoElemento(No *no, int n)
+{
+
+    int leftSize = getSize(no->filhoEsquerda);
+
+    if (n <= leftSize)
+    {
+        return getEnesimoElemento(no->filhoEsquerda, n);
+    }
+    else if (n == leftSize + 1)
+    {
+        return no->chave;
+    }
+    else
+    {
+        return getEnesimoElemento(no->filhoDireita, n - leftSize - 1);
+    }
+}
+
+
+int ArvoreBinariaBusca::posicao(int x){
+
 }

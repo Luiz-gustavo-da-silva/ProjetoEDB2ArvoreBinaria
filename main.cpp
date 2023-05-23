@@ -5,25 +5,26 @@
 using namespace std;
 
 int main() {
-    ArvoreBuscaBinaria bst;
 
-    bst.insert(8);
-    bst.insert(3);
-    bst.insert(10);
-    bst.insert(1);
-    bst.insert(6);
-    bst.insert(14);
-    bst.insert(4);
-    bst.insert(7);
-    bst.insert(13);
+    ArvoreBinariaBusca bst;
 
-    std::cout << "Searching for 6: " << (bst.search(6) ? "Found" : "Not Found") << std::endl;
-    std::cout << "Searching for 9: " << (bst.search(9) ? "Found" : "Not Found") << std::endl;
+    bst.inserir(8);
+    bst.inserir(3);
+    bst.inserir(10);
+    bst.inserir(1);
+    bst.inserir(6);
+    bst.inserir(14);
+    bst.inserir(4);
+    bst.inserir(7);
+    bst.inserir(13);
+
+    cout << (bst.buscar(6) ? "Sim" : "Não") << std::endl;
+    cout << (bst.buscar(9) ? "Sim" : "Não") << endl;
 
     bst.remove(6);
-    std::cout << "Searching for 6 after removal: " << (bst.search(6) ? "Found" : "Not Found") << std::endl;
+    cout << (bst.buscar(6) ? "Sim" : "Não") << endl;
 
-    std::cout << "Rank of 7: " << bst.rank(7) << std::endl;
+    cout << "Rank of 7: " << bst.alturaNo(7) << endl;
 
     return 0;
 }
