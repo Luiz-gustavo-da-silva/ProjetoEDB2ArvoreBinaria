@@ -7,10 +7,8 @@ using namespace std;
 class No {
 public:
     int chave;
-    int tamanho; // Tamanho da subárvore enraizada neste nó
-    int qNoSubarvoresEsquerda;
-    int qNoSubarvoresDireita;
-    No * filhoEsquerda;
+    int tamanho;
+    No * filhoEsquerda;  
     No * filhoDireita;
 
     No(int valor);
