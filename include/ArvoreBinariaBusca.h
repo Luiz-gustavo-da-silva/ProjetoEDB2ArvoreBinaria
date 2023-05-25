@@ -51,9 +51,11 @@ public:
 
     void deletarArvore(No * noatual);
 
-    void inserir(int chave);
+    bool inserir(int chave);
 
     void remove(int chave);
+
+    bool removeInicial(int chave);
 
     bool buscar(int chave);
 
@@ -86,6 +88,7 @@ public:
     void obterSucessor(int & chave, No* temp );
 
     int alturaNo(int chave);
+
 
 };
 

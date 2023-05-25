@@ -21,3 +21,7 @@ Entendimento das funções recursivas e análise da complexidades referentes a e
 ## AVISOS IMPORTANTES
 
 Utilizei a ajuda de alguns materias da internet para construção dos métodos, entre eles, as aulas do Professor Douglas Maioli (https://youtube.com/playlist?list=PLrOyM49ctTx_AMgNGQaic10qQJpTpXfn_).
+
+## Limitações 
+
+Não sei o que está ocorrendo, mas é necessário passar o caminho completo dos arquivos para leitur ae gravação.

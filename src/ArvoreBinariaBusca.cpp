@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <stack>
+#include <fstream>
 
 using namespace std;
 
@@ -164,7 +165,19 @@ void ArvoreBinariaBusca::imprimeArvore(int s)
 
         } while (found != -1);
 
-        cout << final << endl;
+        //cout << final << endl;
+
+        ofstream arquivoS;
+
+        arquivoS.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/saída/saida.txt", ios::app);
+
+        if (arquivoS.is_open())
+        {
+            arquivoS << final << endl;
+        }
+
+        arquivoS.close();
+
     }
     else if (s == 2)
     {
@@ -223,6 +236,7 @@ void ArvoreBinariaBusca::imprimeFormartoDois(No *no, string &arvore, int tracos)
     {
         cout << "-";
     }
+    
     cout << endl;
 
     imprimeFormartoDois(no->filhoEsquerda, arvore, tracos);
@@ -413,6 +427,7 @@ bool ArvoreBinariaBusca::ehCheia()
     int tamanhoArvore = getTamanhoArvore(raiz);
     bool ehCheiaResultado = true;
     getEhCheia(raiz, tamanhoArvore, ehCheiaResultado);
+
     return ehCheiaResultado;
 }
 
@@ -468,7 +483,6 @@ void ArvoreBinariaBusca::getEhCheia(No *no, int &tamanhoArvore, bool &ehCheiaRes
 
     getEhCheia(no->filhoDireita, tamanhoArvore, ehCheiaResultado);
 
-    
 }
 
 
@@ -484,6 +498,7 @@ bool ArvoreBinariaBusca::ehCompleta()
 
     getEhCompleta(raiz, tamanhoArvore, ehCompletaResultado);
 
+    
     return ehCompletaResultado;
 }
 
@@ -514,13 +529,14 @@ void ArvoreBinariaBusca::getEhCompleta(No *no, int &tamanhoArvore, bool &ehCompl
 }
 
 // Método que chama o método recursivo inserirNo
-void ArvoreBinariaBusca::inserir(int chave)
+bool ArvoreBinariaBusca::inserir(int chave)
 {
     if(buscar(chave) == true ){
         cout << "O elemento já existe na árvore"<< endl;
-        return;
+        return false;
     }
     raiz = inserirNo(raiz, chave);
+    return true;
     //inserirNaoRecursivo(chave);
 }
 
@@ -617,6 +633,15 @@ void ArvoreBinariaBusca::inserirNaoRecursivo(int chave)
 
 
 // conjunto de métodos que deletam um valor da árvore.
+bool ArvoreBinariaBusca::removeInicial(int chave){
+
+    if(buscar(chave) == true ){
+        cout << "O elemento não existe na árvore"<< endl;
+        return false;
+    }
+    remove(chave);
+    return true;
+}   
 
 void ArvoreBinariaBusca::remove(int chave){
 
@@ -689,3 +714,4 @@ void ArvoreBinariaBusca::obterSucessor(int &chave, No* temp ){
 }
 
 // ----------------------------------------------------------------
+
