@@ -2,6 +2,10 @@
 
 Luiz Gustavo da Silva
 
+## Link do gitHub
+
+https://github.com/Luiz4us8av6/ProjetoEDB2ArvoreBinaria
+
 ## Objetivo 
 
 Criação de uma árvore de busca binária aumentada que guarda valores inteiros e que suporte, além das operações convencionais de busca, inserção e remoção, as operações elencadas no seguinte documento:
