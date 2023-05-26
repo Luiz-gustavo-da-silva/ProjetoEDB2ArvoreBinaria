@@ -2,6 +2,12 @@
 
 Luiz Gustavo da Silva
 
+## Objetivo 
+
+Criação de uma árvore de busca binária aumentada que guarda valores inteiros e que suporte, além das operações convencionais de busca, inserção e remoção, as operações elencadas no seguinte documento:
+
+https://drive.google.com/file/d/1UCV0XgL8M02OhzdexoILAv5XrfOFrFHB/view?usp=sharing
+
 ## Compilação:
 
 - Crie uma pasta build na raiz do projeto
@@ -13,7 +19,7 @@ Luiz Gustavo da Silva
 
 #### Observações
 
-O código não funciona com passagem de caminhos relartivos, então na execução do programa para o caminho absoluto.
+O código não funciona com passagem de caminhos relartivos, então na execução do programa adicione o caminho absoluto.
 
 ## Abordagem de solução
 
@@ -30,3 +36,5 @@ Utilizei a ajuda de alguns materias da internet para construção dos métodos, 
 ## Limitações 
 
 Não sei o que está ocorrendo, mas é necessário passar o caminho completo dos arquivos para leitur ae gravação.
+
+## Complexidade dos métodos
