@@ -3,12 +3,11 @@
 #include <string>
 #include <sstream>
 
-
 #include "./include/ArvoreBinariaBusca.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
 
     ArvoreBinariaBusca abb;
@@ -21,9 +20,16 @@ int main()
     int posicao;
     int numeroInteiro;
 
-    // Leitura do arquivo de entrada com os valores da árvore
+    if(argc < 4){
+        cout << "ERRO: Informe os arquivos de entrada e saída corretamente";
+        return 0;
+    }
 
-    arquivoL.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/entrada/arquivo1.txt");
+    // Adição do arquivo de saída ao objeto criado
+    abb.setCaminhoSaida(argv[3]);
+    
+    // Leitura do arquivo de entrada com os valores da árvore
+    arquivoL.open(argv[1]);
 
     if (arquivoL.is_open())
     {
@@ -42,11 +48,14 @@ int main()
 
     // Leitura dos comandos
 
-    arquivoLEntradas.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/entrada/arquivo2.txt");
+    arquivoLEntradas.open(argv[2]);
 
     if (arquivoLEntradas.is_open())
     {
-        arquivoS.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/saída/saida.txt", ios::app);
+
+        // Abertura do arquivo de saída, caso não exita ele é criado.
+
+        arquivoS.open(argv[3], ios::app);
 
         if (arquivoS.is_open())
         {

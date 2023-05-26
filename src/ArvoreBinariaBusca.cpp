@@ -167,7 +167,7 @@ void ArvoreBinariaBusca::imprimeArvore(int s)
 
         ofstream arquivoS;
 
-        arquivoS.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/saída/saida.txt", ios::app);
+        arquivoS.open(caminhoSaida, ios::app);
 
         arquivoS << final << endl;
 
@@ -180,7 +180,7 @@ void ArvoreBinariaBusca::imprimeArvore(int s)
 
         ofstream arquivoS;
 
-        arquivoS.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/saída/saida.txt", ios::app);
+        arquivoS.open(caminhoSaida, ios::app);
 
         for (int i = 0; i < linhasOp2.size(); i++)
         {
@@ -736,3 +736,7 @@ void ArvoreBinariaBusca::obterSucessor(int &chave, No *temp)
     chave = temp->chave;
 }
 
+
+void ArvoreBinariaBusca::setCaminhoSaida(string caminhoSaida){
+    this->caminhoSaida = caminhoSaida;
+}   

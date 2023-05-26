@@ -13,6 +13,8 @@ class ArvoreBinariaBusca
 {
 
 private:
+
+   
     No *raiz;
 
     No *inserirNo(No *no, int chave);
@@ -92,6 +94,10 @@ public:
     string pre_ordem ();
 
     void imprimeArvore (int s);
+
+    string caminhoSaida;
+
+    void setCaminhoSaida(string caminhoSaida);
 
 };
 
