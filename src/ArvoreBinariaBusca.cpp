@@ -5,9 +5,9 @@
 #include <stdexcept>
 #include <stack>
 #include <fstream>
+#include <vector>
 
 using namespace std;
-
 
 // Construtores
 ArvoreBinariaBusca::ArvoreBinariaBusca() // Construtores
@@ -16,23 +16,22 @@ ArvoreBinariaBusca::ArvoreBinariaBusca() // Construtores
 }
 
 ArvoreBinariaBusca::~ArvoreBinariaBusca()
-{ 
+{
     deletarArvore(raiz);
 }
 
-// ----------------------------------------------------
-
 // Apaga todos os ponteiros da árvore para evitar acúmulo de lixo na memária
-void ArvoreBinariaBusca::deletarArvore(No * noatual){
-    if(noatual==nullptr){
+void ArvoreBinariaBusca::deletarArvore(No *noatual)
+{
+    if (noatual == nullptr)
+    {
         deletarArvore(noatual->filhoEsquerda);
         deletarArvore(noatual->filhoDireita);
         delete noatual;
     }
 }
 
-
-// Método que chama a função getPre_ordem e retorna uma string contendo a árvore em pré-ordem  
+// Método que chama a função getPre_ordem e retorna uma string contendo a árvore em pré-ordem
 string ArvoreBinariaBusca::pre_ordem()
 {
     string valor;
@@ -41,20 +40,19 @@ string ArvoreBinariaBusca::pre_ordem()
 }
 
 // Método recursivo que percorre a árvore em pré-ordem construindo uma string (valor),
-// no final da sua execução como a string é passada por referência seu valor é mantido na memória  
+// no final da sua execução como a string é passada por referência seu valor é mantido na memória
 void ArvoreBinariaBusca::getPre_ordem(No *no, string &valor)
 {
 
     if (no != nullptr)
     {
-        valor = valor + " " + to_string(no->chave);
+        valor = valor + to_string(no->chave) + " ";
 
         getPre_ordem(no->filhoEsquerda, valor);
 
         getPre_ordem(no->filhoDireita, valor);
     }
 }
-
 
 // Método que chama o método recursivo getBusca, e a partir do dado retornado por ele
 // identifica se a chave existe ou não.
@@ -102,7 +100,6 @@ int ArvoreBinariaBusca::alturaNo(int chave)
     return getAlturaNo(raiz, chave, 0);
 }
 
-
 // Método que retorna a altura de um no na árvore (esse método auxilia outro métodos)
 int ArvoreBinariaBusca::getAlturaNo(No *no, int chave, int altura)
 {
@@ -146,10 +143,11 @@ void ArvoreBinariaBusca::imprimeArvore(int s)
 
     string final = "(";
     string final2 = "";
+    vector<string> linhasOp2;
 
     int found = 1;
 
-    if (s == 1)
+    if (s == 2)
     {
         imprimeFormartoUm(raiz, final);
         final = final + ")";
@@ -165,28 +163,36 @@ void ArvoreBinariaBusca::imprimeArvore(int s)
 
         } while (found != -1);
 
-        //cout << final << endl;
+        // cout << final << endl;
 
         ofstream arquivoS;
 
         arquivoS.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/saída/saida.txt", ios::app);
 
-        if (arquivoS.is_open())
-        {
-            arquivoS << final << endl;
-        }
+        arquivoS << final << endl;
 
         arquivoS.close();
-
     }
-    else if (s == 2)
+    else if (s == 1)
     {
 
-        imprimeFormartoDois(raiz, final2, 30);
+        imprimeFormartoDois(raiz, final2, 30, linhasOp2);
+
+        ofstream arquivoS;
+
+        arquivoS.open("/home/luiz/Área de Trabalho/ProjetoEDB2ArvoreBinaria/arquivos/saída/saida.txt", ios::app);
+
+        for (int i = 0; i < linhasOp2.size(); i++)
+        {
+            arquivoS << linhasOp2[i] << endl;
+        }
+
+        linhasOp2.clear();
+        arquivoS.close();
     }
     else
     {
-        cout << "Formato inválido" << endl;
+        // cout << "Formato inválido" << endl;
     }
 }
 
@@ -217,7 +223,7 @@ void ArvoreBinariaBusca::imprimeFormartoUm(No *no, string &arvore)
 }
 
 // Método que imprime a árvore no formato 2 (com parênteses que delimitam os níveis)
-void ArvoreBinariaBusca::imprimeFormartoDois(No *no, string &arvore, int tracos)
+void ArvoreBinariaBusca::imprimeFormartoDois(No *no, string &arvore, int tracos, vector<string> &linhasOp2)
 {
 
     if (no == nullptr)
@@ -225,28 +231,33 @@ void ArvoreBinariaBusca::imprimeFormartoDois(No *no, string &arvore, int tracos)
         return;
     }
 
+    string linha;
+
     for (int i = 0; i < 7 * alturaNo(no->chave); i++)
     {
-        cout << " ";
+        linha = linha + " ";
+        // cout << " ";
     }
 
-    cout << no->chave << " ";
+    linha = linha + to_string(no->chave) + " ";
+    // cout << no->chave << " ";
 
     for (int i = 0; i < tracos - ((alturaNo(no->chave) - 1) * 7); i++)
     {
-        cout << "-";
+        linha = linha + "-";
+        // cout << "-";
     }
-    
-    cout << endl;
 
-    imprimeFormartoDois(no->filhoEsquerda, arvore, tracos);
+    linhasOp2.push_back(linha);
+    // cout << endl;
 
-    imprimeFormartoDois(no->filhoDireita, arvore, tracos);
+    imprimeFormartoDois(no->filhoEsquerda, arvore, tracos, linhasOp2);
+
+    imprimeFormartoDois(no->filhoDireita, arvore, tracos, linhasOp2);
 }
 
-
 // Método que chama o método recursivo getMediana e retorna o valor da médiana da árvore,
-// se a árvore for par, retorna o ménor valor (filho esquerdo). 
+// se a árvore for par, retorna o ménor valor (filho esquerdo).
 int ArvoreBinariaBusca::mediana()
 {
     int tamanhoArvore = getTamanho(raiz);
@@ -254,7 +265,7 @@ int ArvoreBinariaBusca::mediana()
     return getMediana(raiz, tamanhoArvore);
 }
 
-// Método recursivo que acha a mediana 
+// Método recursivo que acha a mediana
 int ArvoreBinariaBusca::getMediana(No *no, int tamanhoArvore)
 {
 
@@ -276,7 +287,6 @@ int ArvoreBinariaBusca::getMediana(No *no, int tamanhoArvore)
     }
 }
 
-
 // Método que chama o método recursivo getEnesimoElemento, que dado uma determinada posição,
 // retorna a chave revente a essa posição.
 int ArvoreBinariaBusca::enesimoElemento(int n)
@@ -285,7 +295,7 @@ int ArvoreBinariaBusca::enesimoElemento(int n)
     int resultado = -1;
     if (n < 1 || n > getTamanho(raiz))
     {
-        cout << "índice inválido" << endl;
+        // cout << "índice inválido" << endl;
         return -1;
     }
     getEnesimoElemento(raiz, n, cont, resultado);
@@ -315,7 +325,6 @@ void ArvoreBinariaBusca::getEnesimoElemento(No *no, int n, int &cont, int &resul
 
     getEnesimoElemento(no->filhoDireita, n, cont, resultado);
 }
-
 
 // Método que chama o método recursivo getPosição, que dado uma chave retorna a posição do elemento
 int ArvoreBinariaBusca::posicao(int x)
@@ -364,7 +373,7 @@ double ArvoreBinariaBusca::media(int x)
     {
         getMedia(current, current, soma, cont, resultadoFinal);
 
-        cout << soma << cont << endl;
+        // cout << soma << cont << endl;
 
         if (current->chave == raiz->chave)
         {
@@ -381,8 +390,7 @@ double ArvoreBinariaBusca::media(int x)
     }
 }
 
-
-// Método recursivo que retorna a média dos filhos de uma dado no 
+// Método recursivo que retorna a média dos filhos de uma dado no
 void ArvoreBinariaBusca::getMedia(No *no, No *noInicial, double &soma, double &cont, int &resultadoFinal)
 {
     if (no == nullptr)
@@ -456,7 +464,7 @@ void ArvoreBinariaBusca::getEhCheia(No *no, int &tamanhoArvore, bool &ehCheiaRes
 
         if (alturaNo(no->chave) == tamanhoArvore - 2)
         {
-            //cout << "1" << endl;
+            // cout << "1" << endl;
             ehCheiaResultado = false;
             return;
         }
@@ -465,7 +473,7 @@ void ArvoreBinariaBusca::getEhCheia(No *no, int &tamanhoArvore, bool &ehCheiaRes
     {
         if (alturaNo(no->chave) != tamanhoArvore - 1)
         {
-            //cout << "2" << endl;
+            // cout << "2" << endl;
             ehCheiaResultado = false;
             return;
         }
@@ -475,16 +483,14 @@ void ArvoreBinariaBusca::getEhCheia(No *no, int &tamanhoArvore, bool &ehCheiaRes
     {
         if (alturaNo(no->chave) == 0 && tamanhoArvore >= 3)
         {
-             //cout << "3" << endl;
+            // cout << "3" << endl;
             ehCheiaResultado = false;
             return;
         }
     }
 
     getEhCheia(no->filhoDireita, tamanhoArvore, ehCheiaResultado);
-
 }
-
 
 /*Uma árvore completa é aquela em que se n
  é um nó com alguma sub-árvores vazias,
@@ -498,7 +504,6 @@ bool ArvoreBinariaBusca::ehCompleta()
 
     getEhCompleta(raiz, tamanhoArvore, ehCompletaResultado);
 
-    
     return ehCompletaResultado;
 }
 
@@ -517,9 +522,12 @@ void ArvoreBinariaBusca::getEhCompleta(No *no, int &tamanhoArvore, bool &ehCompl
     {
         ehCompletaResultado = false;
         return;
-    }else if (no->filhoDireita != nullptr && no->filhoEsquerda == nullptr || no->filhoDireita == nullptr && no->filhoEsquerda != nullptr || no->filhoDireita == nullptr && no->filhoEsquerda == nullptr){
-        
-        if(alturaNo(no->chave) != tamanhoArvore-1 && alturaNo(no->chave) != tamanhoArvore-2 ){
+    }
+    else if (no->filhoDireita != nullptr && no->filhoEsquerda == nullptr || no->filhoDireita == nullptr && no->filhoEsquerda != nullptr || no->filhoDireita == nullptr && no->filhoEsquerda == nullptr)
+    {
+
+        if (alturaNo(no->chave) != tamanhoArvore - 1 && alturaNo(no->chave) != tamanhoArvore - 2)
+        {
             ehCompletaResultado = false;
             return;
         }
@@ -531,16 +539,17 @@ void ArvoreBinariaBusca::getEhCompleta(No *no, int &tamanhoArvore, bool &ehCompl
 // Método que chama o método recursivo inserirNo
 bool ArvoreBinariaBusca::inserir(int chave)
 {
-    if(buscar(chave) == true ){
-        cout << "O elemento já existe na árvore"<< endl;
+    if (buscar(chave) == true)
+    {
+        // cout << "O elemento já existe na árvore"<< endl;
         return false;
     }
     raiz = inserirNo(raiz, chave);
     return true;
-    //inserirNaoRecursivo(chave);
+    // inserirNaoRecursivo(chave);
 }
 
-// Método recursivo que insere um novo elemento na árvore. 
+// Método recursivo que insere um novo elemento na árvore.
 No *ArvoreBinariaBusca::inserirNo(No *no, int chave)
 {
 
@@ -563,7 +572,6 @@ No *ArvoreBinariaBusca::inserirNo(No *no, int chave)
     return no;
 }
 
-
 // Inserir de forma não recursiva (achei muito grande, resolvi deixar de forma recursiva)!
 
 void ArvoreBinariaBusca::inserirNaoRecursivo(int chave)
@@ -579,7 +587,7 @@ void ArvoreBinariaBusca::inserirNaoRecursivo(int chave)
     }
     else
     {
-        //Testar se da vazamento de mémoria (Se der tempo)
+        // Testar se da vazamento de mémoria (Se der tempo)
         No *temp = raiz;
 
         while (temp != nullptr)
@@ -611,7 +619,6 @@ void ArvoreBinariaBusca::inserirNaoRecursivo(int chave)
                 }
             }
         }
-      
     }
 
     // Atualizar o tamanho da subárvore enraizada em cada nó percorrido
@@ -631,22 +638,25 @@ void ArvoreBinariaBusca::inserirNaoRecursivo(int chave)
     }
 }
 
-
 // conjunto de métodos que deletam um valor da árvore.
-bool ArvoreBinariaBusca::removeInicial(int chave){
+bool ArvoreBinariaBusca::removeInicial(int chave)
+{
 
-    if(buscar(chave) == true ){
-        cout << "O elemento não existe na árvore"<< endl;
+    if (buscar(chave) == false)
+    {
+        // cout << "O elemento não existe na árvore"<< endl;
         return false;
     }
     remove(chave);
     return true;
-}   
+}
 
-void ArvoreBinariaBusca::remove(int chave){
+void ArvoreBinariaBusca::remove(int chave)
+{
 
-    if(buscar(chave) == false ){
-        cout << "O elemento não existe na árvore"<< endl;
+    if (buscar(chave) == false)
+    {
+        // cout << "O elemento não existe na árvore"<< endl;
         return;
     }
 
@@ -666,52 +676,63 @@ void ArvoreBinariaBusca::remove(int chave){
         }
     }
 
-    if(buscar(chave) == false ){
-        cout << "O elemento foi removido da árvore"<< endl;
+    if (buscar(chave) == false)
+    {
+        // cout << "O elemento foi removido da árvore"<< endl;
         return;
     }
 }
 
-void ArvoreBinariaBusca::removerBusca(int chave, No *& noatual){
-    
-    if(chave < noatual->chave){
+void ArvoreBinariaBusca::removerBusca(int chave, No *&noatual)
+{
+
+    if (chave < noatual->chave)
+    {
         removerBusca(chave, noatual->filhoEsquerda);
-    }else if(chave > noatual->chave){
-        removerBusca(chave, noatual->filhoDireita); 
-    }else{
+    }
+    else if (chave > noatual->chave)
+    {
+        removerBusca(chave, noatual->filhoDireita);
+    }
+    else
+    {
         deletarNo(noatual);
     }
-
 }
 
-void ArvoreBinariaBusca::deletarNo(No *& noatual){
-    No * temp = noatual;
+void ArvoreBinariaBusca::deletarNo(No *&noatual)
+{
+    No *temp = noatual;
 
-    if(noatual->filhoEsquerda == nullptr){
-        noatual  = noatual->filhoDireita;
+    if (noatual->filhoEsquerda == nullptr)
+    {
+        noatual = noatual->filhoDireita;
         delete temp;
-    }else if (noatual->filhoDireita == nullptr){
-        noatual  = noatual->filhoEsquerda; 
+    }
+    else if (noatual->filhoDireita == nullptr)
+    {
+        noatual = noatual->filhoEsquerda;
         delete temp;
-    }else{
+    }
+    else
+    {
         int chaveSecessor;
         obterSucessor(chaveSecessor, noatual);
         noatual->chave = chaveSecessor;
 
         removerBusca(chaveSecessor, noatual->filhoDireita);
     }
-
 }
 
-void ArvoreBinariaBusca::obterSucessor(int &chave, No* temp ){
-        temp = temp->filhoDireita;
+void ArvoreBinariaBusca::obterSucessor(int &chave, No *temp)
+{
+    temp = temp->filhoDireita;
 
-        while(temp->filhoEsquerda != nullptr){
-            temp = temp->filhoEsquerda;
-        }
+    while (temp->filhoEsquerda != nullptr)
+    {
+        temp = temp->filhoEsquerda;
+    }
 
-        chave = temp->chave;
+    chave = temp->chave;
 }
-
-// ----------------------------------------------------------------
 

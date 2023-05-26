@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+
 
 #include "./include/ArvoreBinariaBusca.h"
 
@@ -17,8 +19,6 @@ int main()
 
     string linha;
     int posicao;
-    string op1;
-    string op2;
     int numeroInteiro;
 
     // Leitura do arquivo de entrada com os valores da árvore
@@ -53,28 +53,21 @@ int main()
 
             while (getline(arquivoLEntradas, linha))
             {
-                if (!linha.empty() && linha[linha.size() - 1] == '\r')
-                {
-                    linha.erase(linha.size() - 1);
-                }
-                posicao = linha.find(" ");
+                std::istringstream iss(linha);
+                std::string command, numberStr;
+                int number = -1;
 
-                if (posicao != -1)
+                if (iss >> command >> numberStr)
                 {
-                    op1 = linha.substr(0, posicao);
-                    op2 = linha.substr(posicao + 1, linha.size() - 1);
+                    std::istringstream numberIss(numberStr);
+                    if (!(numberIss >> number))
+                    {
+                        number = -1;
+                    }
                 }
-                else
-                {
-                    op2 = -2;
-                }
+              
 
-                if (!op2.empty() && op2[op2.size() - 1] == '\r')
-                {
-                    op2.erase(op2.size() - 1);
-                }
-
-                if (linha == "CHEIA")
+                if (command == "CHEIA")
                 {
                     // Lógica para a opção CHEIA
 
@@ -87,7 +80,7 @@ int main()
                         arquivoS << "A árvore não é cheia" << endl;
                     }
                 }
-                else if (linha == "COMPLETA")
+                else if (command == "COMPLETA")
                 {
 
                     // Lógica para a opção COMPLETA
@@ -101,104 +94,99 @@ int main()
                         arquivoS << "A árvore não é completa" << endl;
                     }
                 }
-                else if (op1 == "ENESIMO")
+                else if (command == "ENESIMO")
                 {
 
                     // Lógica para a opção ENESIMO com o valor de n
-                    numeroInteiro = std::stoi(op2);
+                    
 
-                    if (abb.enesimoElemento(numeroInteiro) != -1)
+                    if (abb.enesimoElemento(number) != -1)
                     {
-                        arquivoS << abb.enesimoElemento(numeroInteiro) << endl;
+                        arquivoS << abb.enesimoElemento(number) << endl;
                     }
                     else
                     {
                         arquivoS << "ERRO" << endl;
                     }
                 }
-                else if (op1 == "INSIRA")
+                else if (command == "INSIRA")
                 {
 
                     // Lógica para a opção INSIRA com o valor especificado
-
-                    numeroInteiro = std::stoi(op2);
-
-                    if (abb.inserir(numeroInteiro) == true)
+                    //cout << op2 << endl;
+                    if (abb.inserir(number) == true)
                     {
-                        arquivoS << op2 << " adicionado" << endl;
+                        arquivoS << number << " ";
+                        arquivoS << "adicionado" << endl;
                     }
                     else
                     {
-                        arquivoS << op2 << " já está na árvore, não pode ser inserido" << endl;
+                        arquivoS << number << " ";
+                        arquivoS << "já está na árvore, não pode ser inserido" << endl;
                     }
+
                 }
-                else if (linha == "PREORDEM")
+                else if (command == "PREORDEM")
                 {
                     // Lógica para a opção PREORDEM
 
                     arquivoS << abb.pre_ordem() << endl;
                 }
-                else if (op1 == "IMPRIMA")
+                else if (command == "IMPRIMA")
                 {
 
                     // Lógica para a opção IMPRIMA com o tipo especificado
-                    numeroInteiro = std::stoi(op2);
-
-                    abb.imprimeArvore(numeroInteiro);
+                    
+                    abb.imprimeArvore(number);
                 }
-                else if (op1 == "REMOVA")
+                else if (command == "REMOVA")
                 {
 
                     // Lógica para a opção REMOVA com o valor especificado
 
-                    numeroInteiro = std::stoi(op2);
-
-                    if (abb.removeInicial(numeroInteiro))
+                    if (abb.removeInicial(number))
                     {
-                        arquivoS << op2 << " removido" << endl;
+                        arquivoS << number << " removido" << endl;
                     }
                     else
                     {
-                        arquivoS << op2 << " não está na árvore, não pode ser removido" << endl;
-                    }
+                        arquivoS << number <<" não está na árvore, não pode ser removido" << endl;
+                    } 
+
                 }
-                else if (op1 == "POSICAO")
+                else if (command == "POSICAO")
                 {
 
                     // Lógica para a opção POSICAO com o valor especificado
-                    numeroInteiro = std::stoi(op2);
+                    
 
-                    arquivoS << abb.posicao(numeroInteiro) << endl;
+                    arquivoS << abb.posicao(number) << endl;
                 }
-                else if (linha == "MEDIANA")
+                else if (command == "MEDIANA")
                 {
                     // Lógica para a opção MEDIANA
 
                     arquivoS << abb.mediana() << endl;
                 }
-                else if (op1 == "MEDIA")
+                else if (command == "MEDIA")
                 {
 
                     // Lógica para a opção MEDIA com o valor especificado
 
-                    numeroInteiro = std::stoi(op2);
-
-                    arquivoS << abb.media(numeroInteiro) << endl;
+                    arquivoS << abb.media(number) << endl;
                 }
-                else if (op1 == "BUSCAR")
+                else if (command == "BUSCAR")
                 {
 
                     // Lógica para a opção BUSCAR com o valor especificado
 
-                    numeroInteiro = std::stoi(op2);
-
-                    if (abb.buscar(numeroInteiro))
+                    if (abb.buscar(number))
                     {
-                        arquivoS << " Chave encontrada" << endl;
+                        arquivoS << "Chave encontrada" << endl;
                     }
                     else
                     {
-                        arquivoS << " Chave não encontrada" << endl;
+                        arquivoS << "Chave não encontrada" << endl;
                     }
                 }
                 else
@@ -219,6 +207,7 @@ int main()
     {
         std::cout << "Não foi possível abrir o arquivo." << std::endl;
     }
+
 
     return 0;
 }

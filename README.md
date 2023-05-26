@@ -8,7 +8,12 @@ Luiz Gustavo da Silva
 - Navegue até ela
 - Execute o camando cmake ..
 - Execute o comando make
-- Por fim, rode o executável gerado "./ArvoreBinariaBusca"
+- Por fim, rode o executável gerado "./ArvoreBinariaBusca", com dois parâmetros 
+"caminho dos aquivos de entrada" "caminho do arquivo de saída".
+
+#### Observações
+
+O código não funciona com passagem de caminhos relartivos, então na execução do programa para o caminho absoluto.
 
 ## Abordagem de solução
 

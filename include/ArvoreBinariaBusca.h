@@ -35,7 +35,7 @@ private:
 
     void imprimeFormartoUm(No * no, string &arvore);
 
-    void imprimeFormartoDois(No *no, string &arvore, int tracos);
+    void imprimeFormartoDois(No *no, string &arvore, int tracos, vector<string> & linhasOp2);
 
     void getMedia(No* no, No * noInicial, double & soma, double & cont, int & resultadoFinal);
 
@@ -43,17 +43,35 @@ private:
 
     int getTamanhoArvore(No * no);
 
+    void inserirNaoRecursivo(int chave);
+
+    void removerBusca(int chave, No *& noatual);
+
+    void deletarNo(No *& noatual);
+
+    void obterSucessor(int & chave, No* temp );
+
+    int tamanhoArvore();
+ 
+    int alturaNo(int chave);
+
+    void remove(int chave);
+
 public:
+
+    // Cosntrutores
 
     ArvoreBinariaBusca();
 
     ~ArvoreBinariaBusca();
 
+    // Método para apagar todos os ponteiros da árvore
+    
     void deletarArvore(No * noatual);
 
-    bool inserir(int chave);
+    // Métodos principais
 
-    void remove(int chave);
+    bool inserir(int chave);
 
     bool removeInicial(int chave);
 
@@ -74,21 +92,6 @@ public:
     string pre_ordem ();
 
     void imprimeArvore (int s);
-
-    // Métodos adicionais
-
-    int tamanhoArvore();
- 
-    void inserirNaoRecursivo(int chave);
-
-    void removerBusca(int chave, No *& noatual);
-
-    void deletarNo(No *& noatual);
-
-    void obterSucessor(int & chave, No* temp );
-
-    int alturaNo(int chave);
-
 
 };
 
