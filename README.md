@@ -39,6 +39,31 @@ Utilizei a ajuda de alguns materias da internet para construção dos métodos, 
 
 ## Complexidade dos métodos
 
-    
+inserirNo(): O(n) no pior caso e O(log n). 
+
+Conjunto "remove": O(n) no pior caso e O(log n) no melhor caso.
+
+buscar(): O(n) no pior caso e O(log n). 
+
+enesimoElemento(): O(n).
+
+posicao(): O(n).
+
+mediana(): O(log n).
+
+media(): O(n). 
+
+ehCheia(): O(n).
+
+ehcompleta(): O(n).
+
+pre_ordem(): O(n).
+
+imprimeArvore(): O(n).
+
+
+
+
+
 
 
