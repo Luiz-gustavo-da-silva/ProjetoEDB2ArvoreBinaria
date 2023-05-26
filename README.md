@@ -14,16 +14,20 @@ https://drive.google.com/file/d/1UCV0XgL8M02OhzdexoILAv5XrfOFrFHB/view?usp=shari
 - Navegue até ela
 - Execute o camando cmake ..
 - Execute o comando make
-- Por fim, rode o executável gerado "./ArvoreBinariaBusca", com dois parâmetros 
-"caminho dos aquivos de entrada" "caminho do arquivo de saída".
+- Por fim, rode o executável gerado "./ArvoreBinariaBusca", com três parâmetros 
+"caminho dos aquivos contendo os valores da árvore", "caminho com as instruções de operações na árvore" e "caminho do arquivo de saída".
+
+### Exemplo comando de execução
+
+    ./ArvoreBinariaBusca ../arquivos/entrada/arquivo1.txt ../arquivos/entrada/arquivo2.txt ../arquivos/saida/saida.txt
 
 #### Observações
 
-O código não funciona com passagem de caminhos relartivos, então na execução do programa adicione o caminho absoluto.
+Não crie aquivos com espaços, como por exemplo "arquivo 1", o código não suporta esse formato.
 
 ## Abordagem de solução
 
-Observação dos algoritmos vistos em sala de aula, e tentativa e erro na implementação dos métodos recursivos.
+Observação dos algoritmos vistos em sala de aula, e implementação por tentativa e erro dos métodos recursivos.
 
 ## Dificuldades 
 
@@ -33,8 +37,8 @@ Entendimento das funções recursivas e análise da complexidades referentes a e
 
 Utilizei a ajuda de alguns materias da internet para construção dos métodos, entre eles, as aulas do Professor Douglas Maioli (https://youtube.com/playlist?list=PLrOyM49ctTx_AMgNGQaic10qQJpTpXfn_).
 
-## Limitações 
-
-Não sei o que está ocorrendo, mas é necessário passar o caminho completo dos arquivos para leitur ae gravação.
-
 ## Complexidade dos métodos
+
+    
+
+
