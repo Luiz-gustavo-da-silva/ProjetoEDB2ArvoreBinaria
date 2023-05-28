@@ -2,7 +2,7 @@
 
 Luiz Gustavo da Silva
 
-## Link do gitHub
+## Link do GitHub
 
 https://github.com/Luiz4us8av6/ProjetoEDB2ArvoreBinaria
 
